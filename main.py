@@ -23,7 +23,7 @@ def print_logtime(api_url: str, user_login: str, start_time: datetime, end_time:
 	if res.status_code != 200:
 		raise requests.HTTPError(f"API Logtime error: {res.status_code}")
 	json_data = json.dumps(res.json(), indent=2)
-	logger.info(json_data)
+	print(json_data)
 
 
 def authenticate(api_url: str, api_uid: str, api_secret: str):
