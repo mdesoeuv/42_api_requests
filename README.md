@@ -6,7 +6,7 @@ The print_logtime function is used to get logtime data from a specific time peri
 
 .env file structure :
 
-API_USER="Base64 encoded"
+```API_USER="Base64 encoded"
 API_URL=""
 API_UID=""
 API_SECRET=""
