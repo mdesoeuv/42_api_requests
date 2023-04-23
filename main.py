@@ -22,12 +22,11 @@ def print_logtime(api_url: str, user_login: str, start_time: datetime, end_time:
 	res = requests.get(api_url + f"/v2/users/{user_login}/locations_stats", headers=headers, params=params)
 	if res.status_code != 200:
 		raise requests.HTTPError(f"API Logtime error: {res.status_code}")
-	res = res.json()
-	json_data = json.dumps(res, indent=2)
+	json_data = json.dumps(res.json(), indent=2)
 	logger.info(json_data)
 
 
-def authenticate(api_user: str, api_url: str, api_uid: str, api_secret: str):
+def authenticate(api_url: str, api_uid: str, api_secret: str):
 	params = {
 		"grant_type": "client_credentials",
 		"client_id": api_uid,
@@ -37,8 +36,7 @@ def authenticate(api_user: str, api_url: str, api_uid: str, api_secret: str):
 	if res.status_code != 200:
 		raise requests.HTTPError(f"API Authentication error: {res.status_code}")
 	res = res.json()
-	token = res.get("access_token")
-	return token
+	return res.get("access_token")
 
 
 if __name__ == "__main__":
@@ -52,7 +50,7 @@ if __name__ == "__main__":
 	api_uid = getenv("API_UID")
 	api_secret = getenv("API_SECRET")
 	try:
-		token = authenticate(api_user, api_url, api_uid, api_secret)
+		token = authenticate(api_url, api_uid, api_secret)
 		print_logtime(api_url=api_url, user_login=api_user, start_time=getenv("START_TIME"), end_time=getenv("END_TIME"), token=token)
 	except requests.HTTPError as err:
 		logger.error(err)
