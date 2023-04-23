@@ -11,7 +11,7 @@ logger = logging.basicConfig(level="INFO")
 logger = logging.getLogger("api_logger")
 
 
-def get_logtime(api_url: str, user_login: str, start_time: datetime, end_time: datetime, token: str):
+def print_logtime(api_url: str, user_login: str, start_time: datetime, end_time: datetime, token: str):
 	params = {
 		"begin_at": start_time,
 		"end_at": end_time
@@ -53,6 +53,6 @@ if __name__ == "__main__":
 	api_secret = getenv("API_SECRET")
 	try:
 		token = authenticate(api_user, api_url, api_uid, api_secret)
-		get_logtime(api_url=api_url, user_login=api_user, start_time=getenv("START_TIME"), end_time=getenv("END_TIME"), token=token)
+		print_logtime(api_url=api_url, user_login=api_user, start_time=getenv("START_TIME"), end_time=getenv("END_TIME"), token=token)
 	except requests.HTTPError as err:
 		logger.error(err)
